@@ -607,7 +607,7 @@
           const [selectedImageUrl, setSelectedImageUrl] = useState('');
           const [imageError, setImageError] = useState(false);
 
-           useEffect(() => {
+          useEffect(() => {
                if (session?.user?.id) {
                    fetchUserClients(session.user.id);
                } else {
@@ -628,9 +628,14 @@
 
                    if (error) throw error;
                    const fetchedClients = data || [];
+                   // --- ADD SORTING HERE ---
+                   // --- ДОДАТИ СОРТУВАННЯ ТУТ ---
+                   fetchedClients.sort((a, b) => a.name.localeCompare(b.name, 'uk')); // Sort alphabetically by name
                    setClients(fetchedClients);
 
                    if (fetchedClients.length > 0) {
+                       // If current selection is invalid or empty after sorting, set to first client
+                       // Якщо поточний вибір недійсний або порожній після сортування, встановити першого клієнта
                        if (!selectedClientId || !fetchedClients.some(c => c.id === selectedClientId)) {
                            setSelectedClientId(fetchedClients[0].id);
                        }
@@ -645,7 +650,6 @@
                    setLoadingClients(false);
                }
            }
-
           useEffect(() => {
             const selectedClient = clients.find(c => c.id === selectedClientId);
             const newUrl = selectedClient ? selectedClient.image_url : '';
