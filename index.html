@@ -76,6 +76,8 @@
             const isAdmin = session?.user?.email === ADMIN_EMAIL;
             const loggedInUserIdentifier = session?.user?.id ?? null;
             const loggedInUserEmail = session?.user?.email ?? null;
+    
+            
 
             const value = { supabase: supabaseClient, session, loading, isAdmin, loggedInUserIdentifier, loggedInUserEmail };
             return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
